@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOLOGIA Programming Language</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --rock-brown: #8B4513;
+            --rock-gray: #696969;
+            --sediment: #D2B48C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: repeating-linear-gradient(to right,
+                    var(--rock-brown),
+                    var(--sediment),
+                    var(--rock-gray),
+                    var(--sediment),
+                    var(--rock-brown) 100px);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right,
+                    var(--rock-brown),
+                    var(--sediment),
+                    var(--rock-gray));
+            border-radius: 2px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        nav {
+            background-color: var(--secondary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--light);
+            text-decoration: underline;
+        }
+
+        section {
+            padding: 3rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(to bottom, var(--primary), #1a252f);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card h3 {
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            border-radius: 3px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--rock-brown);
+        }
+
+        .github-section {
+            background-color: #f4f4f4;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .strata-visual {
+            height: 200px;
+            background: linear-gradient(to bottom,
+                    var(--rock-brown) 20%,
+                    var(--sediment) 20%,
+                    var(--sediment) 40%,
+                    var(--rock-gray) 40%,
+                    var(--rock-gray) 65%,
+                    var(--rock-brown) 65%,
+                    var(--rock-brown) 80%,
+                    var(--sediment) 80%);
+            margin: 2rem 0;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .strata-visual::before {
+            content: "Geological Strata";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">GEOLOGIA</div>
+            <p>A Programming Language Based on Geological Processes</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about" onclick="scrollToSection('about'); return false;">About</a></li>
+            <li><a href="#features" onclick="scrollToSection('features'); return false;">Features</a></li>
+            <li><a href="#examples" onclick="scrollToSection('examples'); return false;">Examples</a></li>
+            <li><a href="#playground" onclick="scrollToSection('playground'); return false;">Playground</a></li>
+            <li><a href="#github" onclick="scrollToSection('github'); return false;">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Program with the Power of Earth's Processes</h1>
+            <p>GEOLOGIA is a unique programming language that models computation after Earth's geological processes,
+                making programming intuitive for those with an interest in Earth sciences.</p>
+            <a href="#playground" class="btn">Try GEOLOGIA</a>
+        </div>
+    </section>
+
+    <section style="background-color: var(--primary); color: white; padding: 0.5rem 0; text-align: center;">
+        <div class="container">
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+                <a href="#about" style="color: white; text-decoration: none; padding: 0.5rem 1rem;">Learn More</a>
+                <a href="#examples" style="color: white; text-decoration: none; padding: 0.5rem 1rem;">View Examples</a>
+                <a href="#playground" style="color: white; text-decoration: none; padding: 0.5rem 1rem;">Try the
+                    Playground</a>
+                <a href="#github" style="color: white; text-decoration: none; padding: 0.5rem 1rem;">Get on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About GEOLOGIA</h2>
+            <p>GEOLOGIA is a novel programming language that bridges the gap between Earth sciences and computer
+                science. By modeling computational concepts after geological processes, GEOLOGIA creates an intuitive
+                programming experience for those familiar with geology while teaching geological concepts to
+                programmers.</p>
+
+            <div class="strata-visual"></div>
+
+            <div style="margin: 2rem 0;">
+                <h3>Core Philosophy</h3>
+                <ul>
+                    <li><strong>Time-Based Execution:</strong> Programs evolve through geological time</li>
+                    <li><strong>Natural Transformations:</strong> Operations represent natural geological processes</li>
+                    <li><strong>Layered Structure:</strong> Data and code organized in geological strata</li>
+                    <li><strong>Educational Value:</strong> Teaching programming through familiar Earth science concepts
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+            <h2>Key Features</h2>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Geological Terminology</h3>
+                    <p>Every keyword and operation has geological meaning, creating a natural connection between code
+                        and Earth processes.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Natural Data Types</h3>
+                    <p>Rock types (igneous, sedimentary, metamorphic) represent different data types, making data
+                        classification intuitive.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Transformation Metaphors</h3>
+                    <p>Operations mirror geological processes, with mathematical operations represented by processes
+                        like erosion, compression, and deposition.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Educational Synergy</h3>
+                    <p>Learn programming concepts and geological processes simultaneously through the language's
+                        dual-purpose design.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>Visual Code Organization</h3>
+                    <p>Code is organized in strata, creating a visual representation of program flow that mirrors
+                        geological formations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>JavaScript-Based Interpreter</h3>
+                    <p>Easy to run in modern browsers with a web-based playground for experimentation and learning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples">
+        <div class="container">
+            <h2>Code Examples</h2>
+
+            <h3>Hello World</h3>
+            <pre><code>#fossil# GEOLOGIA Hello World Program
+#fossil# This program outputs "Hello, World!" to the surface (console)
+
+expose "Hello, World!"</code></pre>
+
+            <h3>Sum Calculator</h3>
+            <pre><code>#fossil# Simple sum calculation program in GEOLOGIA
+#fossil# This calculates the sum of numbers from 1 to 10
+
+#fossil# Initialize the sum to 0
+sediment sum igneous 0
+
+#fossil# Add each number one at a time
+sediment sum igneous sum deposit 1
+sediment sum igneous sum deposit 2
+...
+sediment sum igneous sum deposit 10
+
+#fossil# Show the final result
+expose "Sum of numbers from 1 to 10 is:"
+expose sum</code></pre>
+
+            <h3>Temperature Converter</h3>
+            <pre><code>#fossil# GEOLOGIA Temperature Converter
+#fossil# Define a function to convert from Celsius to Fahrenheit
+
+era celsius_to_fahrenheit
+    #fossil# Get the temperature in Celsius (param0)
+    sediment celsius igneous param0
+
+    #fossil# Formula: F = C * 9/5 + 32
+    sediment step1 igneous celsius compress 9
+    sediment step2 igneous step1 dissolve 5
+    sediment fahrenheit igneous step2 deposit 32
+
+    #fossil# Return the result
+    uplift fahrenheit
+extinction</code></pre>
+        </div>
+    </section>
+
+    <section id="playground">
+        <div class="container">
+            <h2>GEOLOGIA Playground</h2>
+            <p>Try GEOLOGIA code in our web-based playground. Enter your code below and click "Run" to see the results.
+            </p>
+
+            <div style="display: flex; margin-bottom: 1rem;">
+                <div style="flex: 1; margin-right: 1rem;">
+                    <h3>Code Editor</h3>
+                    <textarea id="code-editor"
+                        style="width: 100%; height: 300px; padding: 1rem; font-family: 'Courier New', Courier, monospace; border: 1px solid #ddd; border-radius: 5px;">#fossil# Write your GEOLOGIA code here
+
+#fossil# Example: Hello World
+expose "Hello, World!"</textarea>
+                    <button id="run-btn" class="btn" style="margin-top: 1rem;">Run Code</button>
+                </div>
+
+                <div style="flex: 1;">
+                    <h3>Output</h3>
+                    <div id="output"
+                        style="width: 100%; height: 300px; padding: 1rem; background-color: #f4f4f4; border: 1px solid #ddd; border-radius: 5px; overflow-y: auto; font-family: 'Courier New', Courier, monospace;">
+                        Output will appear here...</div>
+                </div>
+            </div>
+
+            <p>Note: This is a simplified version of the interpreter. For the full version with all features, please
+                download from GitHub.</p>
+        </div>
+    </section>
+
+    <section id="github" class="github-section">
+        <div class="container">
+            <h2>Get GEOLOGIA on GitHub</h2>
+            <p>The full GEOLOGIA interpreter is available on GitHub. Clone the repository to start using GEOLOGIA
+                locally.</p>
+            <pre><code>git clone https://github.com/geologia-lang/geologia-interpreter.git
+cd geologia-interpreter
+npm install
+npm start</code></pre>
+            <a href="https://github.com/geologia-lang/geologia-interpreter" class="btn" target="_blank">View on
+                GitHub</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div>
+                    <h3>GEOLOGIA</h3>
+                    <p>A programming language based on geological processes</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#" onclick="scrollToSection('about'); return false;"
+                                style="color: white; text-decoration: none;">About</a></li>
+                        <li><a href="#" onclick="scrollToSection('features'); return false;"
+                                style="color: white; text-decoration: none;">Features</a></li>
+                        <li><a href="#" onclick="scrollToSection('examples'); return false;"
+                                style="color: white; text-decoration: none;">Examples</a></li>
+                        <li><a href="#" onclick="scrollToSection('playground'); return false;"
+                                style="color: white; text-decoration: none;">Playground</a></li>
+                        <li><a href="#" onclick="scrollToSection('github'); return false;"
+                                style="color: white; text-decoration: none;">GitHub</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Connect</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="https://github.com/geologia-lang/geologia-interpreter" target="_blank"
+                                style="color: white; text-decoration: none;">GitHub</a></li>
+                        <li><a href="mailto:contact@geologia-lang.org"
+                                style="color: white; text-decoration: none;">Email Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255, 255, 255, 0.2); margin: 1rem 0;">
+            <p>&copy; 2025 GEOLOGIA Programming Language. All rights reserved.</p>
+            <p>Created with love for geology and programming.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to handle smooth scrolling to sections
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                window.scrollTo({
+                    top: section.offsetTop - 60, // Account for fixed nav
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Handle "Try GEOLOGIA" button click
+        document.querySelector('.hero .btn').addEventListener('click', function (e) {
+            e.preventDefault();
+            scrollToSection('playground');
+        });
+
+        // Run GEOLOGIA code in playground
+        document.getElementById('run-btn').addEventListener('click', function () {
+            const code = document.getElementById('code-editor').value;
+            const output = document.getElementById('output');
+
+            // Simple simulator for demonstration purposes
+            output.innerHTML = "Interpreting GEOLOGIA code...\n\n";
+
+            // Parse the code for any 'expose' statements
+            const lines = code.split('\n');
+            let results = [];
+            let variables = {};
+
+            // Very simple variable tracking for demo purposes
+            for (let line of lines) {
+                line = line.trim();
+                // Skip comments and empty lines
+                if (line === '' || line.startsWith('#fossil#')) {
+                    continue;
+                }
+
+                // Handle variable declaration
+                if (line.startsWith('sediment')) {
+                    const parts = line.substring(9).trim().split(' ');
+                    if (parts.length >= 3) {
+                        const varName = parts[0];
+                        if (parts.length === 3 && !isNaN(parts[2])) {
+                            // Simple number assignment
+                            variables[varName] = Number(parts[2]);
+                        } else if (parts.length >= 4 && parts[2] === 'deposit' && !isNaN(parts[3])) {
+                            // Addition
+                            const current = variables[varName] || 0;
+                            variables[varName] = current + Number(parts[3]);
+                        }
+                    }
+                }
+
+                // Handle output
+                if (line.startsWith('expose')) {
+                    // Extract the content to expose
+                    const content = line.substring(7).trim();
+                    if (content.startsWith('"') && content.endsWith('"')) {
+                        // It's a string literal
+                        results.push(content.substring(1, content.length - 1));
+                    } else if (variables[content] !== undefined) {
+                        // It's a variable we know
+                        results.push(variables[content]);
+                    } else {
+                        // Unknown variable
+                        results.push(`[Value of ${content}]`);
+                    }
+                }
+            }
+
+            if (results.length === 0) {
+                output.innerHTML += "No output produced. Make sure to use 'expose' to show results.";
+            } else {
+                output.innerHTML += results.join('\n');
+            }
+        });
+
+        // Make sure navigation is smooth for all in-page links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = this.getAttribute('href').substring(1);
+                if (target) {
+                    scrollToSection(target);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
